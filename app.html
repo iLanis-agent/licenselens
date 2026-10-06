@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LicenseLens - will your dependency licenses actually combine?</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9878;</text></svg>">
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--line:#2d3646;--fg:#e6edf3;--dim:#8b98a9;--ok:#3fb950;--warn:#d29922;--bad:#f85149;--unk:#a371f7;--acc:#58a6ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1060px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;margin:0 0 4px}
+h1 .scales{color:var(--warn)}
+.sub{color:var(--dim);margin:0 0 20px}
+a{color:var(--acc)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);display:block;margin:0 0 6px}
+textarea{width:100%;min-height:220px;background:var(--panel2);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px;font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical}
+select{background:var(--panel2);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px;width:100%}
+button{background:var(--acc);color:#06101f;border:0;border-radius:8px;padding:10px 18px;font-weight:600;font-size:14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--acc);border:1px solid var(--line);font-weight:400;padding:6px 10px;font-size:12.5px}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}
+.banner{border-radius:10px;padding:14px 16px;font-size:16px;font-weight:600;margin:16px 0;display:none}
+.banner.ok{background:#0f2a16;border:1px solid var(--ok);color:var(--ok)}
+.banner.conditional{background:#2c2409;border:1px solid var(--warn);color:var(--warn)}
+.banner.blocked{background:#350f12;border:1px solid var(--bad);color:var(--bad)}
+.banner small{display:block;font-weight:400;color:var(--fg);margin-top:4px;font-size:13px}
+.comp{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0}
+.comp h3{margin:0 0 6px;font-size:15px;font-family:ui-monospace,Menlo,monospace}
+.badge{display:inline-block;border-radius:20px;padding:2px 10px;font-size:12px;margin:2px 4px 2px 0;border:1px solid var(--line);color:var(--dim)}
+.badge.cat-permissive,.badge.cat-public-domain{color:var(--ok);border-color:var(--ok)}
+.badge.cat-permissive-patent{color:#7ee787;border-color:#7ee787}
+.badge.cat-weak-filelevel,.badge.cat-weak-secondary,.badge.cat-weak-library{color:var(--warn);border-color:var(--warn)}
+.badge.cat-copyleft,.badge.cat-network-copyleft,.badge.cat-copyleft-compat-list{color:#ff9d5c;border-color:#ff9d5c}
+.badge.cat-non-commercial,.badge.cat-non-free,.badge.cat-source-available,.badge.cat-permissive-advertising,.badge.cat-permissive-filelevel{color:var(--bad);border-color:var(--bad)}
+.badge.cat-content-attribution,.badge.cat-content-sharealike,.badge.cat-docs-copyleft,.badge.cat-font{color:var(--unk);border-color:var(--unk)}
+.v{font-weight:600}
+.v.ok{color:var(--ok)}.v.conditional{color:var(--warn)}.v.blocked{color:var(--bad)}.v.unknown{color:var(--unk)}
+.reason{color:var(--fg);font-size:13.5px;margin:6px 0}
+.oblig{color:var(--dim);font-size:13px;margin:6px 0 0;padding-left:18px}
+.oblig li{margin:2px 0}
+.warns{background:#2c2409;border:1px solid var(--warn);border-radius:10px;padding:10px 14px;margin:14px 0;display:none}
+.warns li{color:var(--warn);font-size:13.5px;margin:3px 0}
+.feas{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.feas span{background:var(--panel2);border:1px solid var(--ok);color:var(--ok);border-radius:6px;padding:3px 10px;font-size:12.5px;font-family:ui-monospace,Menlo,monospace}
+.conflict{color:var(--bad);font-family:ui-monospace,Menlo,monospace;font-size:13.5px;margin:4px 0}
+.meta{color:var(--dim);font-size:12.5px;margin-top:28px}
+.expr{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1><span class="scales">&#9878;</span> LicenseLens</h1>
+<p class="sub">Paste your dependencies' licenses. Find out whether they can legally sit in the same project, and what you may distribute the result as. <a href="index.html">About &amp; sources</a></p>
+<div class="grid">
+<div class="panel">
+<label>Dependencies - one "name - license" per line, a package.json, license-checker JSON, or bare SPDX expressions</label>
+<textarea id="inp" spellcheck="false" placeholder="express - MIT&#10;left-pad - (MIT OR Apache-2.0)&#10;db-driver - GPLv3"></textarea>
+<div class="presets" id="presets"></div>
+</div>
+<div class="panel">
+<label>What do you want to distribute the whole work under?</label>
+<select id="outbound"></select>
+<div class="banner" id="banner"></div>
+<div id="feasBox" style="display:none">
+<label>Whole-work outbounds this combination allows</label>
+<div class="feas" id="feas"></div>
+<div id="conflicts"></div>
+</div>
+</div>
+</div>
+<div class="warns" id="warns"><b>Heads up</b><ul id="warnList"></ul></div>
+<div id="comps"></div>
+<p class="meta">Dataset: 64 curated SPDX ids; names, OSI and FSF-libre flags verified against SPDX license-list-data v3.29.0. Compatibility rules follow the FSF license list, the ASF GPL-compatibility note, the EPL-2.0 FAQ, MPL-2.0 &sect;3.3 and the CC BY-SA 4.0 one-way GPLv3 statement. Assumes each dependency is linked into your work (library use), not a separate process. A teaching tool, not legal advice.</p>
+</div>
+<script src="engine.js?v=373"></script>
+<script>
+(function(){
+"use strict";
+var PRESETS = {
+  "classic: MIT+Apache into GPLv3": {i:"express - MIT\nhttpd - Apache-2.0\nlib - BSD-3-Clause", o:"GPL-3.0-only"},
+  "Apache-2.0 in a GPLv2 project": {i:"web - Apache-2.0", o:"GPL-2.0-only"},
+  "GPL-2.0-only meets GPL-3.0-only": {i:"coreutils-patch - GPL-2.0-only\nmodern-lib - GPL-3.0-only", o:"GPL-3.0-only"},
+  "AGPL dependency, closed SaaS": {i:"search-server - AGPL-3.0-only", o:"Proprietary"},
+  "LGPL lib in a phone app": {i:"codec - LGPL-2.1-only", o:"Proprietary"},
+  "MPL-2.0 into GPL (Exhibit B?)": {i:"mozilla-files - MPL-2.0", o:"GPL-3.0-only"},
+  "CDDL meets GPL": {i:"solaris-util - CDDL-1.0", o:"GPL-3.0-only"},
+  "the JSON license": {i:"json-java - JSON", o:"GPL-3.0-only"},
+  "CC-BY-NC art in a paid app": {i:"icon-pack - CC-BY-NC-4.0", o:"Proprietary"},
+  "SSPL in your stack": {i:"document-db - SSPL-1.0", o:"Proprietary"},
+  "OpenSSL without the exception": {i:"tls - OpenSSL", o:"GPL-3.0-only"},
+  "package.json with no license": {i:"{\"name\":\"my-saas\",\"version\":\"2.1.0\",\"private\":true,\"dependencies\":{\"left-pad\":\"^1.3.0\",\"chalk\":\"^4.1.2\"}}", o:"MIT"},
+  "dual-licensed Rust crate": {i:"serde-ish - (MIT OR Apache-2.0)", o:"Proprietary"},
+  "the whole kitchen sink into GPLv3": {i:"a - MIT\nb - Apache-2.0\nc - BSD-2-Clause\nsprites - CC-BY-SA-4.0\nmoz - MPL-2.0\ncrypto - LGPL-3.0-only", o:"GPL-3.0-only"}
+};
+var OUT_LABELS = {
+  "MIT":"MIT (permissive)", "BSD-3-Clause":"BSD-3-Clause (permissive)", "Apache-2.0":"Apache-2.0 (permissive, patent grant)",
+  "MPL-2.0":"MPL-2.0 (file-level copyleft)", "EPL-2.0":"EPL-2.0 (weak copyleft)", "EUPL-1.2":"EUPL-1.2 (copyleft, compatibility list)",
+  "LGPL-2.1-only":"LGPL-2.1 (library copyleft)", "LGPL-3.0-only":"LGPL-3.0 (library copyleft)",
+  "GPL-2.0-only":"GPL-2.0-only (strong copyleft)", "GPL-3.0-only":"GPL-3.0-only (strong copyleft)",
+  "AGPL-3.0-only":"AGPL-3.0-only (network copyleft)", "Proprietary":"Proprietary / closed source"
+};
+var sel = document.getElementById('outbound');
+LL.UNIVERSE.forEach(function(id){
+  var o=document.createElement('option'); o.value=id; o.textContent=OUT_LABELS[id]||id; sel.appendChild(o);
+});
+sel.value='MIT';
+var pr=document.getElementById('presets');
+Object.keys(PRESETS).forEach(function(k){
+  var b=document.createElement('button'); b.className='ghost'; b.textContent=k;
+  b.onclick=function(){ document.getElementById('inp').value=PRESETS[k].i; sel.value=PRESETS[k].o; run(); };
+  pr.appendChild(b);
+});
+document.getElementById('inp').addEventListener('input', run);
+sel.addEventListener('change', run);
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function run(){
+  var text=document.getElementById('inp').value;
+  var outbound=sel.value;
+  var compsBox=document.getElementById('comps');
+  var banner=document.getElementById('banner');
+  var warns=document.getElementById('warns');
+  compsBox.innerHTML=''; banner.style.display='none'; warns.style.display='none';
+  document.getElementById('feasBox').style.display='none';
+  if(!text.trim()) return;
+  var res=LL.analyze(text, outbound);
+  var dist=res.distribute, comb=res.combine;
+
+  banner.className='banner '+dist.overall; banner.style.display='block';
+  var headline={ok:'This combination works.', conditional:'Possible, with conditions.', blocked:'This combination does not work.'}[dist.overall];
+  var sub={ok:'Every dependency allows a "'+esc(OUT_LABELS[outbound]||outbound)+'" outbound (some carry routine conditions - read the cards).',
+    conditional:'At least one dependency needs you to satisfy a specific condition, or could not be verified.',
+    blocked:'At least one dependency cannot be distributed under this license. The card says why.'}[dist.overall];
+  banner.innerHTML=headline+'<small>'+sub+'</small>';
+
+  if(res.parse.warnings.length){
+    warns.style.display='block';
+    document.getElementById('warnList').innerHTML=res.parse.warnings.map(function(w){return '<li>'+esc(w)+'</li>';}).join('');
+  }
+
+  document.getElementById('feasBox').style.display='block';
+  var feas=document.getElementById('feas');
+  feas.innerHTML=comb.feasible.map(function(f){return '<span>'+esc(OUT_LABELS[f]||f)+'</span>';}).join('') || '<span style="border-color:var(--bad);color:var(--bad)">no whole-work outbound satisfies every dependency</span>';
+  document.getElementById('conflicts').innerHTML=comb.conflicts.map(function(p){
+    return '<div class="conflict">&#10007; '+esc(p[0])+' and '+esc(p[1])+' share no possible whole-work license</div>';
+  }).join('');
+
+  dist.results.forEach(function(r){
+    var div=document.createElement('div'); div.className='comp';
+    var lics=r.licIds.map(function(id){
+      var l=LL.BY_ID[id];
+      if(!l) return '<span class="badge">'+esc(id)+' (unknown)</span>';
+      var flags=esc(l.name)+' &middot; '+(l.osi?'OSI-approved':'not OSI-approved')+' &middot; '+(l.fsf?'FSF-free':'not FSF-free')+(l.dep?' &middot; deprecated id':'');
+      return '<span class="badge cat-'+l.cat+'">'+esc(l.cat.replace(/-/g,' '))+'</span><span class="badge" title="'+flags+'">'+esc(id)+'</span>';
+    }).join('');
+    var l0=r.licIds.length===1?LL.BY_ID[r.licIds[0]]:null;
+    var oblig='';
+    if(l0){ var obs=LL.obligationsOf(l0); if(obs.length) oblig='<ul class="oblig">'+obs.map(function(o){return '<li>'+esc(o)+'</li>';}).join('')+'</ul>'; }
+    var comp=res.parse.components.find(function(c){return c.name===r.name;});
+    div.innerHTML='<h3>'+esc(r.name)+'</h3>'
+      +(comp?'<div class="expr">'+esc(comp.expr)+(comp.ast?' &rarr; '+esc(LL.astToString(comp.ast)):'')+'</div>':'')
+      +'<div style="margin:6px 0">'+lics+'</div>'
+      +'<div class="reason"><span class="v '+r.verdict+'">'+r.verdict.toUpperCase()+'</span> &middot; '+esc(r.reason)+'</div>'
+      +oblig;
+    compsBox.appendChild(div);
+  });
+}
+run();
+})();
+</script>
+</body>
+</html>
