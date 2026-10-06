@@ -10,7 +10,7 @@ Writes expected.json for run_tests.js. Exits non-zero on any failure.
 import json, re, sys
 
 BASE = __import__('os').path.dirname(__file__)
-spdx = {l['licenseId']: l for l in json.load(open(f'{BASE}/spdx-3.29.0.json'))['licenses']}
+spdx = {l['licenseId']: l for l in json.load(open(f'{BASE}/spdx-3.29.0.extract.json'))['licenses']}
 
 # --- independent spec table: id -> (kind, excl, cond) ----------------------
 # kind: any | set | never
