@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LicenseLens - dependency license compatibility, made legible</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9878;</text></svg>">
+<style>
+body{margin:0;background:#0d1117;color:#e6edf3;font:16px/1.65 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:48px 20px 80px}
+h1{font-size:32px;margin:0 0 8px}
+h2{font-size:20px;margin:36px 0 8px}
+p,li{color:#b8c2cf}
+a{color:#58a6ff}
+.cta{display:inline-block;background:#58a6ff;color:#06101f;font-weight:700;padding:13px 26px;border-radius:10px;text-decoration:none;margin:18px 0 6px;font-size:17px}
+.ex{background:#161b22;border:1px solid #2d3646;border-radius:10px;padding:14px 18px;margin:12px 0;font-size:14.5px}
+.ex b{color:#e6edf3}
+.ok{color:#3fb950}.bad{color:#f85149}.warn{color:#d29922}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.92em;background:#1c2330;padding:1px 6px;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>&#9878; LicenseLens</h1>
+<p>Your <code>package.json</code> has 900 dependencies and 14 different licenses. Some of them legally cannot sit in the same project. LicenseLens reads the pile and tells you which pairs fight, what you may distribute the result as, and the exact condition that makes the borderline cases work.</p>
+<a class="cta" href="app.html">Open the app &rarr;</a>
+
+<h2>The traps it catches</h2>
+<div class="ex"><b>Apache-2.0 + GPLv2.</b> <span class="bad">Blocked.</span> The FSF considers Apache-2.0 compatible with GPLv3 only - its patent-termination clause collides with GPLv2 section 7. That "just a permissive license" dependency quietly rules out a GPLv2 project.</div>
+<div class="ex"><b>GPL-2.0-only meets GPL-3.0-only.</b> <span class="bad">Blocked.</span> Two strong copylefts pointing at different versions share no whole-work license. "or later" is the only bridge - and it is missing from most real-world LICENSE files.</div>
+<div class="ex"><b>AGPL in your SaaS.</b> <span class="warn">Conditional.</span> You never "distribute" a web app - and section 13 knows that. Users interacting over a network must be offered the source of the whole work.</div>
+<div class="ex"><b>MPL-2.0 into GPL.</b> <span class="warn">Check Exhibit B.</span> Section 3.3 allows the combination - unless the files carry the "Incompatible With Secondary Licenses" notice. Nobody checks. LicenseLens reminds you to.</div>
+<div class="ex"><b>The JSON license.</b> <span class="bad">Non-free.</span> "The Software shall be used for Good, not Evil." Funny, and unenforceable: the FSF and Debian both rule it non-free, and it cannot combine with GPL code.</div>
+<div class="ex"><b>No license at all.</b> <span class="bad">Blocked.</span> A dependency without a license is all-rights-reserved. GitHub's publish button grants you nothing.</div>
+
+<h2>What it does</h2>
+<ul>
+<li>Parses real input: <code>name - license</code> lines, package.json, license-checker JSON, bare SPDX expressions like <code>(MIT OR Apache-2.0)</code> and <code>GPL-2.0+ WITH Classpath-exception-2.0</code>.</li>
+<li>Resolves the names people actually type - "Apache 2", "GPLv3", "BSD" - onto 64 curated SPDX ids.</li>
+<li>Computes the set of whole-work licenses the combination allows, and names the conflicting pair when the set is empty.</li>
+<li>Grades your chosen outbound license per dependency: ok, conditional (with the exact condition), or blocked (with the reason).</li>
+<li>Badges every license with its category, OSI approval, FSF-freedom and deprecation status.</li>
+</ul>
+
+<h2>Sources and honesty</h2>
+<p>License names, OSI-approval and FSF-libre flags are verified programmatically against the official SPDX license-list-data v3.29.0. The compatibility rules follow the FSF license list, the Apache Software Foundation's GPL-compatibility note, the Eclipse EPL-2.0 FAQ, Mozilla's MPL-2.0 FAQ (&sect;3.3), and the Creative Commons / FSF statement that CC BY-SA 4.0 is one-way compatible with GPLv3. The test suite pins 47 scenarios against an independently written Python oracle.</p>
+<p>It assumes each dependency is linked into your work (library use), not invoked as a separate process; module-boundary questions are flagged, not resolved. It is a teaching tool, not legal advice.</p>
+<p><a href="app.html">Open the app &rarr;</a> &middot; <a href="https://github.com/iLanis-agent/licenselens">Source</a> &middot; <a href="https://ilanis-agent.github.io/app-factory/">App Factory</a></p>
+</div>
+</body>
+</html>
