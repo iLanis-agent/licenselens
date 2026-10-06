@@ -1,0 +1,806 @@
+[
+ {
+  "name": "classic permissive into GPLv3",
+  "per": {
+   "express": "ok",
+   "httpd": "ok",
+   "lib": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "apache2 blocked into GPLv2 (ASF/FSF)",
+  "per": {
+   "web": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "gpl2-only vs gpl3-only conflict",
+  "feasible": [],
+  "conflict": [
+   [
+    "a",
+    "b"
+   ]
+  ]
+ },
+ {
+  "name": "gpl2-or-later bridges to gpl3",
+  "per": {
+   "a": "ok",
+   "b": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "GPL-3.0-only"
+  ]
+ },
+ {
+  "name": "agpl dep blocks proprietary saas",
+  "per": {
+   "db": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only"
+  ]
+ },
+ {
+  "name": "agpl dep ok under agpl outbound",
+  "per": {
+   "db": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only"
+  ]
+ },
+ {
+  "name": "gpl3 dep into agpl3 outbound (sec 13)",
+  "per": {
+   "lib": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "GPL-3.0-only"
+  ]
+ },
+ {
+  "name": "agpl dep into gpl3 outbound blocked",
+  "per": {
+   "lib": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only"
+  ]
+ },
+ {
+  "name": "lgpl21 dynamic-linked into proprietary",
+  "per": {
+   "sqlite-ish": "conditional"
+  },
+  "overall": "conditional",
+  "feasible": [
+   "AGPL-3.0-only",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only"
+  ]
+ },
+ {
+  "name": "lgpl21 merged up to gpl3",
+  "per": {
+   "lib": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only"
+  ]
+ },
+ {
+  "name": "lgpl3 cannot go down to gpl2",
+  "per": {
+   "lib": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only",
+   "GPL-3.0-only",
+   "LGPL-3.0-only"
+  ]
+ },
+ {
+  "name": "mpl2 into gpl3: check exhibit B",
+  "per": {
+   "files": "conditional"
+  },
+  "overall": "conditional",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "epl2 into gpl3: check secondary notice",
+  "per": {
+   "jdt": "conditional"
+  },
+  "overall": "conditional",
+  "feasible": [
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "cddl cannot merge into gpl",
+  "per": {
+   "dukes": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "cddl files fine in mit project",
+  "per": {
+   "dukes": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "json license blocked into gpl (FSF non-free)",
+  "per": {
+   "jsonlib": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "json license tolerable in mit",
+  "per": {
+   "jsonlib": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "old bsd advertising blocked into gpl2",
+  "per": {
+   "ancient": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "openssl blocked into gpl3 without exception",
+  "per": {
+   "tls": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "cc-by-sa-4 asset ships in gpl2 game (asset-level)",
+  "per": {
+   "sprites": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "cc-by-4 asset fine in mit",
+  "per": {
+   "icons": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "cc-by-nc poisons commercial product",
+  "per": {
+   "photos": "conditional"
+  },
+  "overall": "conditional",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "cc-by-nc blocked into gpl (sec 7)",
+  "per": {
+   "photos": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "eupl dep merges into gpl3 (appendix)",
+  "per": {
+   "eulib": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only"
+  ]
+ },
+ {
+  "name": "eupl dep blocked into mit",
+  "per": {
+   "eulib": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only"
+  ]
+ },
+ {
+  "name": "eupl into agpl3 (appendix lists agplv3)",
+  "per": {
+   "eulib": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only"
+  ]
+ },
+ {
+  "name": "sspl has no absorbing outbound",
+  "per": {
+   "mongo": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "busl conditional in proprietary",
+  "per": {
+   "cockroach": "conditional"
+  },
+  "overall": "conditional",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "public domain trio into proprietary",
+  "per": {
+   "a": "ok",
+   "b": "ok",
+   "c": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "ms-pl blocked into gpl3, ok into apache",
+  "per": {
+   "winlib": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "ms-pl into gpl3 blocked",
+  "per": {
+   "winlib": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "ofl font ships as asset in gpl app",
+  "per": {
+   "font": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "gfdl docs ship beside gpl code",
+  "per": {
+   "manual": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "apache2 into lgpl21 flagged conditional",
+  "per": {
+   "web": "conditional"
+  },
+  "overall": "conditional",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "or expression picks safe branch",
+  "per": {
+   "rust-lib": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "and expression requires all",
+  "per": {
+   "dual": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "and expression all permissive into gpl3",
+  "per": {
+   "dual": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "plus operator gpl2+ into gpl3",
+  "per": {
+   "core": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "GPL-2.0-only",
+   "GPL-3.0-only"
+  ]
+ },
+ {
+  "name": "alias gplv3 resolves",
+  "per": {
+   "core": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "GPL-3.0-only"
+  ]
+ },
+ {
+  "name": "alias apache 2 blocked into gpl2",
+  "per": {
+   "web": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "unknown id gets unknown verdict",
+  "per": {
+   "mystery": "unknown"
+  },
+  "overall": "conditional",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "with exception parses, base license governs",
+  "per": {
+   "rt": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "GPL-2.0-only"
+  ]
+ },
+ {
+  "name": "package.json without license field",
+  "per": {
+   "my-app (this package)": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ],
+  "unlicensed": true
+ },
+ {
+  "name": "package.json with license field",
+  "per": {
+   "my-app (this package)": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "license-checker style json",
+  "per": {
+   "left-pad@1.3.0": "ok",
+   "argv@0.0.2": "ok"
+  },
+  "overall": "ok",
+  "feasible": [
+   "AGPL-3.0-only",
+   "Apache-2.0",
+   "BSD-3-Clause",
+   "EPL-2.0",
+   "EUPL-1.2",
+   "GPL-2.0-only",
+   "GPL-3.0-only",
+   "LGPL-2.1-only",
+   "LGPL-3.0-only",
+   "MIT",
+   "MPL-2.0",
+   "Proprietary"
+  ]
+ },
+ {
+  "name": "flat name-to-license map",
+  "per": {
+   "left-pad": "ok",
+   "flossie": "blocked"
+  },
+  "overall": "blocked",
+  "feasible": [
+   "AGPL-3.0-only",
+   "GPL-3.0-only"
+  ]
+ },
+ {
+  "name": "mixed real-world pile into gpl3",
+  "per": {
+   "a": "ok",
+   "b": "ok",
+   "c": "ok",
+   "d": "ok",
+   "e": "conditional",
+   "f": "ok"
+  },
+  "overall": "conditional",
+  "feasible": [
+   "AGPL-3.0-only",
+   "GPL-3.0-only",
+   "LGPL-3.0-only"
+  ]
+ }
+]
