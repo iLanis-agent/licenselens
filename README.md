@@ -14,7 +14,7 @@ Paste your dependencies' licenses; find out whether they can legally sit in the 
 
 ## Model and sources
 
-- Dataset: 64 curated SPDX ids. `name`, `isOsiApproved`, `isFsfLibre`, and deprecation flags are **generated from and verified against** the official SPDX license-list-data v3.29.0 JSON (`tests/spdx-3.29.0.json`).
+- Dataset: 64 curated SPDX ids. `name`, `isOsiApproved`, `isFsfLibre`, and deprecation flags are **generated from and verified against** the official SPDX license-list-data v3.29.0 JSON. The repo carries an extract limited to the 64 dataset ids (`tests/spdx-3.29.0.extract.json`); the extract records the full file's SHA-256 and source URL.
 - Compatibility rules follow: the FSF license list (Apache-2.0 is GPLv3-only, advertising/endorsement clauses are GPL-incompatible, JSON is non-free), the [ASF GPL-compatibility note](https://www.apache.org/licenses/GPL-compatibility), the [EPL-2.0 FAQ](https://www.eclipse.org/legal/epl-2.0/faq/) (Secondary Licenses Compatibility Notice), the [MPL 2.0 FAQ](https://www.mozilla.org/en-US/MPL/2.0/FAQ/) (§3.3 Larger Works, Exhibit B), the EUPL-1.2 compatibility appendix, and the [Creative Commons](https://creativecommons.org/2015/10/08/cc-by-sa-4-0-now-one-way-compatible-with-gplv3/) + FSF statement that CC BY-SA 4.0 is one-way compatible with GPLv3.
 - Assumption: each dependency is linked into your work (library use), not run as a separate process. Content/font licenses (CC, GFDL, OFL) are treated as asset-level passengers that keep their own license.
 - A teaching tool, **not legal advice**.
