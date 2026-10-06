@@ -1,0 +1,497 @@
+[
+ {
+  "name": "classic permissive into GPLv3",
+  "input": "express - MIT\nhttpd - Apache-2.0\nlib - BSD-3-Clause",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "express": "ok",
+    "httpd": "ok",
+    "lib": "ok"
+   }
+  }
+ },
+ {
+  "name": "apache2 blocked into GPLv2 (ASF/FSF)",
+  "input": "web - Apache-2.0",
+  "outbound": "GPL-2.0-only",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "web": "blocked"
+   }
+  }
+ },
+ {
+  "name": "gpl2-only vs gpl3-only conflict",
+  "input": "a - GPL-2.0-only\nb - GPL-3.0-only",
+  "outbound": null,
+  "expect": {
+   "feasibleEmpty": true,
+   "conflict": [
+    [
+     "a",
+     "b"
+    ]
+   ]
+  }
+ },
+ {
+  "name": "gpl2-or-later bridges to gpl3",
+  "input": "a - GPL-2.0-or-later\nb - GPL-3.0-only",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "feasibleContains": [
+    "GPL-3.0-only",
+    "AGPL-3.0-only"
+   ],
+   "feasibleExcludes": [
+    "GPL-2.0-only"
+   ],
+   "overall": "ok"
+  }
+ },
+ {
+  "name": "agpl dep blocks proprietary saas",
+  "input": "db - AGPL-3.0-only",
+  "outbound": "Proprietary",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "db": "blocked"
+   }
+  }
+ },
+ {
+  "name": "agpl dep ok under agpl outbound",
+  "input": "db - AGPL-3.0-only",
+  "outbound": "AGPL-3.0-only",
+  "expect": {
+   "overall": "ok"
+  }
+ },
+ {
+  "name": "gpl3 dep into agpl3 outbound (sec 13)",
+  "input": "lib - GPL-3.0-only",
+  "outbound": "AGPL-3.0-only",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "lib": "ok"
+   }
+  }
+ },
+ {
+  "name": "agpl dep into gpl3 outbound blocked",
+  "input": "lib - AGPL-3.0-only",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "lib": "blocked"
+   }
+  }
+ },
+ {
+  "name": "lgpl21 dynamic-linked into proprietary",
+  "input": "sqlite-ish - LGPL-2.1-only",
+  "outbound": "Proprietary",
+  "expect": {
+   "overall": "conditional",
+   "per": {
+    "sqlite-ish": "conditional"
+   }
+  }
+ },
+ {
+  "name": "lgpl21 merged up to gpl3",
+  "input": "lib - LGPL-2.1-only",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "lib": "ok"
+   }
+  }
+ },
+ {
+  "name": "lgpl3 cannot go down to gpl2",
+  "input": "lib - LGPL-3.0-only",
+  "outbound": "GPL-2.0-only",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "lib": "blocked"
+   }
+  }
+ },
+ {
+  "name": "mpl2 into gpl3: check exhibit B",
+  "input": "files - MPL-2.0",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "conditional",
+   "per": {
+    "files": "conditional"
+   }
+  }
+ },
+ {
+  "name": "epl2 into gpl3: check secondary notice",
+  "input": "jdt - EPL-2.0",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "conditional",
+   "per": {
+    "jdt": "conditional"
+   }
+  }
+ },
+ {
+  "name": "cddl cannot merge into gpl",
+  "input": "dukes - CDDL-1.0",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "dukes": "blocked"
+   }
+  }
+ },
+ {
+  "name": "cddl files fine in mit project",
+  "input": "dukes - CDDL-1.0",
+  "outbound": "MIT",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "dukes": "ok"
+   }
+  }
+ },
+ {
+  "name": "json license blocked into gpl (FSF non-free)",
+  "input": "jsonlib - JSON",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "jsonlib": "blocked"
+   }
+  }
+ },
+ {
+  "name": "json license tolerable in mit",
+  "input": "jsonlib - JSON",
+  "outbound": "MIT",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "jsonlib": "ok"
+   }
+  }
+ },
+ {
+  "name": "old bsd advertising blocked into gpl2",
+  "input": "ancient - BSD-4-Clause",
+  "outbound": "GPL-2.0-only",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "ancient": "blocked"
+   }
+  }
+ },
+ {
+  "name": "openssl blocked into gpl3 without exception",
+  "input": "tls - OpenSSL",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "tls": "blocked"
+   }
+  }
+ },
+ {
+  "name": "cc-by-sa-4 asset ships in gpl2 game (asset-level)",
+  "input": "sprites - CC-BY-SA-4.0",
+  "outbound": "GPL-2.0-only",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "sprites": "ok"
+   }
+  }
+ },
+ {
+  "name": "cc-by-4 asset fine in mit",
+  "input": "icons - CC-BY-4.0",
+  "outbound": "MIT",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "icons": "ok"
+   }
+  }
+ },
+ {
+  "name": "cc-by-nc poisons commercial product",
+  "input": "photos - CC-BY-NC-4.0",
+  "outbound": "Proprietary",
+  "expect": {
+   "overall": "conditional",
+   "per": {
+    "photos": "conditional"
+   }
+  }
+ },
+ {
+  "name": "cc-by-nc blocked into gpl (sec 7)",
+  "input": "photos - CC-BY-NC-4.0",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "photos": "blocked"
+   }
+  }
+ },
+ {
+  "name": "eupl dep merges into gpl3 (appendix)",
+  "input": "eulib - EUPL-1.2",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "eulib": "ok"
+   }
+  }
+ },
+ {
+  "name": "eupl dep blocked into mit",
+  "input": "eulib - EUPL-1.2",
+  "outbound": "MIT",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "eulib": "blocked"
+   }
+  }
+ },
+ {
+  "name": "eupl into agpl3 (appendix lists agplv3)",
+  "input": "eulib - EUPL-1.2",
+  "outbound": "AGPL-3.0-only",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "eulib": "ok"
+   }
+  }
+ },
+ {
+  "name": "sspl has no absorbing outbound",
+  "input": "mongo - SSPL-1.0",
+  "outbound": "Proprietary",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "mongo": "blocked"
+   }
+  }
+ },
+ {
+  "name": "busl conditional in proprietary",
+  "input": "cockroach - BUSL-1.1",
+  "outbound": "Proprietary",
+  "expect": {
+   "overall": "conditional",
+   "per": {
+    "cockroach": "conditional"
+   }
+  }
+ },
+ {
+  "name": "public domain trio into proprietary",
+  "input": "a - Unlicense\nb - WTFPL\nc - CC0-1.0",
+  "outbound": "Proprietary",
+  "expect": {
+   "overall": "ok"
+  }
+ },
+ {
+  "name": "ms-pl blocked into gpl3, ok into apache",
+  "input": "winlib - MS-PL",
+  "outbound": "Apache-2.0",
+  "expect": {
+   "overall": "ok"
+  }
+ },
+ {
+  "name": "ms-pl into gpl3 blocked",
+  "input": "winlib - MS-PL",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "blocked"
+  }
+ },
+ {
+  "name": "ofl font ships as asset in gpl app",
+  "input": "font - OFL-1.1",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "font": "ok"
+   }
+  }
+ },
+ {
+  "name": "gfdl docs ship beside gpl code",
+  "input": "manual - GFDL-1.3-only",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "manual": "ok"
+   }
+  }
+ },
+ {
+  "name": "apache2 into lgpl21 flagged conditional",
+  "input": "web - Apache-2.0",
+  "outbound": "LGPL-2.1-only",
+  "expect": {
+   "overall": "conditional",
+   "per": {
+    "web": "conditional"
+   }
+  }
+ },
+ {
+  "name": "or expression picks safe branch",
+  "input": "rust-lib - (MIT OR Apache-2.0)",
+  "outbound": "Proprietary",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "rust-lib": "ok"
+   }
+  }
+ },
+ {
+  "name": "and expression requires all",
+  "input": "dual - (MIT AND Apache-2.0)",
+  "outbound": "GPL-2.0-only",
+  "expect": {
+   "overall": "blocked",
+   "per": {
+    "dual": "blocked"
+   }
+  }
+ },
+ {
+  "name": "and expression all permissive into gpl3",
+  "input": "dual - (MIT AND Apache-2.0)",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "ok"
+  }
+ },
+ {
+  "name": "plus operator gpl2+ into gpl3",
+  "input": "core - GPL-2.0+",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "ok",
+   "per": {
+    "core": "ok"
+   }
+  }
+ },
+ {
+  "name": "alias gplv3 resolves",
+  "input": "core - GPLv3",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "ok"
+  }
+ },
+ {
+  "name": "alias apache 2 blocked into gpl2",
+  "input": "web - Apache 2",
+  "outbound": "GPL-2.0-only",
+  "expect": {
+   "overall": "blocked"
+  }
+ },
+ {
+  "name": "unknown id gets unknown verdict",
+  "input": "mystery - LicenseRef-Custom-Thing",
+  "outbound": "MIT",
+  "expect": {
+   "overall": "conditional",
+   "per": {
+    "mystery": "unknown"
+   }
+  }
+ },
+ {
+  "name": "with exception parses, base license governs",
+  "input": "rt - GPL-2.0-only WITH Classpath-exception-2.0",
+  "outbound": "GPL-2.0-only",
+  "expect": {
+   "overall": "ok"
+  }
+ },
+ {
+  "name": "package.json without license field",
+  "input": "{\"name\":\"my-app\",\"version\":\"1.0.0\",\"dependencies\":{\"left-pad\":\"^1.0.0\"}}",
+  "outbound": "MIT",
+  "expect": {
+   "unlicensed": true
+  }
+ },
+ {
+  "name": "package.json with license field",
+  "input": "{\"name\":\"my-app\",\"license\":\"Apache-2.0\"}",
+  "outbound": "GPL-2.0-only",
+  "expect": {
+   "overall": "blocked"
+  }
+ },
+ {
+  "name": "license-checker style json",
+  "input": "{\"left-pad@1.3.0\":{\"licenses\":\"MIT\"},\"argv@0.0.2\":{\"licenses\":\"MIT\"}}",
+  "outbound": "GPL-2.0-only",
+  "expect": {
+   "overall": "ok"
+  }
+ },
+ {
+  "name": "flat name-to-license map",
+  "input": "{\"left-pad\":\"MIT\",\"flossie\":\"GPL-3.0-only\"}",
+  "outbound": "MIT",
+  "expect": {
+   "overall": "blocked"
+  }
+ },
+ {
+  "name": "mixed real-world pile into gpl3",
+  "input": "a - MIT\nb - Apache-2.0\nc - BSD-2-Clause\nd - CC-BY-SA-4.0\ne - MPL-2.0\nf - LGPL-3.0-only",
+  "outbound": "GPL-3.0-only",
+  "expect": {
+   "overall": "conditional",
+   "per": {
+    "a": "ok",
+    "b": "ok",
+    "c": "ok",
+    "d": "ok",
+    "e": "conditional",
+    "f": "ok"
+   }
+  }
+ }
+]
